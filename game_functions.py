@@ -162,4 +162,4 @@ def check_game_over(matrix):
     if matrix[0][4] == 1 or matrix[0][5] == 1:
         return True
     else:
-        return False
+        return False              

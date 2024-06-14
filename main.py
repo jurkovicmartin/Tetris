@@ -3,6 +3,7 @@ import random
 
 from game_functions import *
 from draw_functions import *
+from rotating import rotate_shape
 
 pygame.init()
 
@@ -49,7 +50,7 @@ fall_time = 0
 fall_speed = 100 # Milliseconds per grid cell
 
 # Set key repeat to enable holding keys
-pygame.key.set_repeat(100, 100)  # (delay, interval)
+pygame.key.set_repeat(200, 100)  # (delay, interval)
 
 lines = 0
 
@@ -61,8 +62,11 @@ pause = True
 # Game over
 over = False
 
-current_shape = random.randrange(0,7)
-next_shape = random.randrange(0,7)
+# current_shape = random.randrange(0,7)
+current_shape = 0
+# next_shape = random.randrange(0,7)
+next_shape = 0
+rotation_state = 0
 
 new_shape(board, current_shape)
 
@@ -96,7 +100,7 @@ while running:
                 lines = check_lines(lines, board)
 
             elif event.key == pygame.K_UP and not pause and not over:
-                print(board)
+                rotation_state = rotate_shape(board, current_shape, rotation_state)
             # Start
             elif event.key == pygame.K_SPACE and not over:
                 pause = False
@@ -131,20 +135,20 @@ while running:
     draw_grid(screen, GRID_WIDTH, GRID_HEIGHT, GRID_SIZE, (GAME_X_POSITION + 5, GAME_Y_POSITION + 5), board)
     
     # Automatic dropping
-    if not pause and not over:
-        if fall_time >= fall_speed:
-            if move_shape(board, "down"):
-                # Check for game over
-                over = check_game_over(board)
-                if not over:
-                    # New shape drop
-                    current_shape = next_shape
-                    next_shape = random.randrange(0,7)
-                    new_shape(board, current_shape)
-            # Check for full layers
-            lines = check_lines(lines, board)
+    # if not pause and not over:
+    #     if fall_time >= fall_speed:
+    #         if move_shape(board, "down"):
+    #             # Check for game over
+    #             over = check_game_over(board)
+    #             if not over:
+    #                 # New shape drop
+    #                 current_shape = next_shape
+    #                 next_shape = random.randrange(0,7)
+    #                 new_shape(board, current_shape)
+    #         # Check for full layers
+    #         lines = check_lines(lines, board)
 
-            fall_time = 0
+    #         fall_time = 0
 
 
     draw_shape(screen, board, GRID_SIZE)
