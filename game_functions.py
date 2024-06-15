@@ -1,4 +1,5 @@
 import pygame
+import random
 
 def new_shape(matrix, shape):
     """
@@ -65,7 +66,6 @@ def move_shape(matrix, direction)-> bool|None:
 
     # Find current shape
     cells = []
-
     for y, row in enumerate(matrix):
         for x, cell in enumerate(row):
             if cell == 2:
@@ -75,7 +75,7 @@ def move_shape(matrix, direction)-> bool|None:
     if direction == "left":
         # Move current shape
         for i, cell in enumerate(cells):
-            valid_move = validate_move(matrix, cells)
+            valid_move = validate_move(matrix, cells, direction)
             # Left border
             if valid_move == "left":
                 matrix[cells[i][0]][cells[i][1]] = 2
@@ -85,7 +85,7 @@ def move_shape(matrix, direction)-> bool|None:
     elif direction == "right":
         # Move current shape
         for i, cell in enumerate(cells):
-            valid_move = validate_move(matrix, cells)
+            valid_move = validate_move(matrix, cells, direction)
             # Right border
             if valid_move == "right":
                 matrix[cells[i][0]][cells[i][1]] = 2
@@ -96,7 +96,7 @@ def move_shape(matrix, direction)-> bool|None:
         # Move current shape
         new = False
         for i, cell in enumerate(cells):
-            valid_move = validate_move(matrix, cells)
+            valid_move = validate_move(matrix, cells, direction)
             # Bottom
             if valid_move == "bottom":
                 matrix[cells[i][0]][cells[i][1]] = 1
@@ -109,35 +109,45 @@ def move_shape(matrix, direction)-> bool|None:
         raise Exception("Unexpected error")
     
 
-def validate_move(matrix, cells):
+def validate_move(matrix, cells, direction) -> bool:
+    """
+    Returns True of move is ok
+    """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
 
-    for cell in cells:
-        # Bottom
-        if cell[0] == max_row:
-            return "bottom"
-        # Another block collision
-        elif matrix[cell[0] + 1][cell[1]] == 1:
-            return "bottom"
-        else:
-            pass
-
-    for cell in cells:
-        # Left border
-        if cell[1] == 0:
-            return "left"
-        # Another block collision
-        elif matrix[cell[0]][cell[1] - 1] == 1:
-            return "left"
-        # Right border
-        elif cell[1] == max_cell:
-            return "right"
-        # Another block collision
-        elif matrix[cell[0]][cell[1] + 1] == 1:
-            return "right"
-        else:
-            pass
+    if direction == "down":
+        for cell in cells:
+            # Bottom
+            if cell[0] == max_row:
+                return "bottom"
+            # Another block collision
+            elif matrix[cell[0] + 1][cell[1]] == 1:
+                return "bottom"
+            else:
+                pass
+    elif direction == "left":
+        for cell in cells:
+            # Left border
+            if cell[1] == 0:
+                return "left"
+            # Another block collision
+            elif matrix[cell[0]][cell[1] - 1] == 1:
+                return "left"
+            else:
+                pass
+    elif direction == "right":
+        for cell in cells:
+            # Right border
+            if cell[1] == max_cell:
+                return "right"
+            # Another block collision
+            elif matrix[cell[0]][cell[1] + 1] == 1:
+                return "right"
+            else:
+                pass
+    else:
+        raise Exception("Unexpected error")
 
 
 def check_lines(count: int, matrix) -> int:
@@ -162,4 +172,22 @@ def check_game_over(matrix):
     if matrix[0][4] == 1 or matrix[0][5] == 1:
         return True
     else:
-        return False              
+        return False
+
+
+def hold_shape(matrix, current_shape, next_shape, held_shape) -> tuple:
+    """
+    Returns new (current_shape, next_shape, held)
+    """
+    # Remove the current shape from the board
+    for y, row in enumerate(matrix):
+        for x, cell in enumerate(row):
+            if cell == 2:
+                matrix[y][x] = 0
+    
+    if held_shape is None:
+        # New current shape, old current -> held (no held shape)
+        return next_shape, random.randrange(0,7), current_shape
+    else:
+        # Switch held and current shape
+        return held_shape, next_shape, current_shape
