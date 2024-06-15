@@ -63,9 +63,9 @@ pause = True
 over = False
 
 # current_shape = random.randrange(0,7)
-current_shape = 0
+current_shape = 3
 # next_shape = random.randrange(0,7)
-next_shape = 0
+next_shape = 3
 rotation_state = 0
 
 new_shape(board, current_shape)
@@ -96,6 +96,7 @@ while running:
                         current_shape = next_shape
                         next_shape = random.randrange(0,7)
                         new_shape(board, current_shape)
+                        rotation_state = 0
                 # Check for full layers
                 lines = check_lines(lines, board)
 
@@ -124,6 +125,7 @@ while running:
                 current_shape = random.randrange(0,7)
                 next_shape = random.randrange(0,7)
                 new_shape(board, current_shape)
+                rotation_state = 0
             else: pass
         else: pass
 
@@ -145,6 +147,7 @@ while running:
     #                 current_shape = next_shape
     #                 next_shape = random.randrange(0,7)
     #                 new_shape(board, current_shape)
+    #                 rotation_state = 0
     #         # Check for full layers
     #         lines = check_lines(lines, board)
 

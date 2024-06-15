@@ -1,6 +1,5 @@
 # Tetris
 
-- rotating
 - WASD
 - Space
 - Hold
