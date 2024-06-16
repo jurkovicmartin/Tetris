@@ -1,6 +1,13 @@
 import pygame
 import random
 
+"""
+Matrix representation:
+0 = empty cell
+1 = cell with placed shape
+2 = cell with active shape
+"""
+
 def new_shape(matrix, shape):
     """
     Shapes:

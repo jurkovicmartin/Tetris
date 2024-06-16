@@ -49,37 +49,47 @@ def rotate_I(matrix, state, point) -> int:
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
     if state == 0:
+        # Rotate point
+        y, x = point[0], point[1] + 1
         # Check for field border
-        if point[0] + 3 > max_row:
+        if y + 2 > max_row:
             return state
         # Check for another block collision
-        for i in range(1, 4):
-            if matrix[point[0] + i][point[1]] == 1:
-                return state
+        if matrix[y - 1][x] == 1 or matrix[y + 1][x] == 1 or matrix[y + 2][x] == 1:
+            return state
         
         # Removing original shape
-        for i in range(1, 4):
-            matrix[point[0]][point[1] + i] = 0
+        matrix[y][x - 1] = 0
+        matrix[y][x + 1] = 0
+        matrix[y][x + 2] = 0
         # Putting rotated shape
-        for i in range(1, 4):
-            matrix[point[0] + i][point[1]] = 2
+        matrix[y - 1][x] = 2
+        matrix[y + 1][x] = 2
+        matrix[y + 2][x] = 2
+
         return 1
         
     elif state == 1:
+        # Rotate point
+        y, x = point[0] + 1, point[1]
         # Check for field border
-        if point[1] + 3 > max_cell:
+        if x - 1 < 0:
+            return state
+        elif x + 2 > max_cell:
             return state
         # Check for another block collision
-        for i in range(1, 4):
-            if matrix[point[0]][point[1] + i] == 1:
-                return state
+        if matrix[y][x - 1] == 1 or matrix[y][x + 1] == 1 or matrix[y][x + 2] == 1:
+            return state
             
         # Removing original shape
-        for i in range(1, 4):
-            matrix[point[0] + i][point[1]] = 0
+        matrix[y - 1][x] = 0
+        matrix[y + 1][x] = 0
+        matrix[y + 2][x] = 0
         # Putting rotated shape
-        for i in range(1, 4):
-            matrix[point[0]][point[1] + i] = 2
+        matrix[y][x - 1] = 2
+        matrix[y][x + 1] = 2
+        matrix[y][x + 2] = 2
+
         return 0            
     else: raise Exception("Unexpected error")
 
@@ -91,40 +101,42 @@ def rotate_Z(matrix, state, point) -> int:
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
     if state == 0:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[1] + 1 > max_cell:
+        if x + 1 > max_cell:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] - 1] == 1 or matrix[point[0] + 1][point[1] + 1] == 1:
+        if matrix[y][x - 1] == 1 or matrix[y + 1][x + 1] == 1:
             return state
         
         # Removing original shape
-        matrix[point[0] + 1][point[1] - 1] = 0
-        matrix[point[0] + 2][point[1] - 1] = 0
+        matrix[y + 1][x - 1] = 0
+        matrix[y + 2][x - 1] = 0
         # Putting rotated shape
-        matrix[point[0]][point[1] - 1] = 2
-        matrix[point[0] + 1][point[1] + 1] = 2
+        matrix[y][x - 1] = 2
+        matrix[y + 1][x + 1] = 2
 
         return 1
     
     elif state == 1:
+        # Rotate point
+        y, x = point[0], point[1] + 1
         # Check for field border
         if point[0] + 2 > max_row:
             return state
         elif point[1] - 1 < 0:
             return state
         # Check for another block collision
-        if matrix[point[0] + 1][point[1]] == 1 or matrix[point[0] + 1][point[1] - 1] == 1 or matrix[point[0] + 2][point[1] - 1] == 1:
+        if matrix[y + 1][x - 1] == 1 or matrix[y + 2][x - 1] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0]][point[1] + 1] = 0
-        matrix[point[0] + 1][point[1] + 1] = 0
-        matrix[point[0] + 1][point[1] + 2] = 0
+        matrix[y][x - 1] = 0
+        matrix[y + 1][x + 1] = 0
         # Putting rotated shape
-        matrix[point[0] + 1][point[1]] = 2
-        matrix[point[0] + 1][point[1] - 1] = 2
-        matrix[point[0] + 2][point[1] - 1] = 2
+        matrix[y + 1][x - 1] = 2
+        matrix[y + 2][x - 1] = 2
 
         return 0    
     else: raise Exception("Unexpected error")
@@ -137,36 +149,40 @@ def rotate_4(matrix, state, point) -> int:
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
     if state == 0:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[1] - 1 < 0:
+        if x - 1 < 0:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] + 1] == 1 or matrix[point[0] + 1][point[1] - 1] == 1:
+        if matrix[y][x + 1] == 1 or matrix[y + 1][x - 1] == 1:
             return state
         
         # Removing original shape
-        matrix[point[0] + 1][point[1] + 1] = 0
-        matrix[point[0] + 2][point[1] + 1] = 0
+        matrix[y + 1][x + 1] = 0
+        matrix[y + 2][x + 1] = 0
         # Putting rotated shape
-        matrix[point[0]][point[1] + 1] = 2
-        matrix[point[0] + 1][point[1] - 1] = 2
+        matrix[y][x + 1] = 2
+        matrix[y + 1][x - 1] = 2
 
         return 1
     
     elif state == 1:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[0] + 2 > max_row:
+        if y + 2 > max_row:
             return state
         # Check for another block collision
-        if matrix[point[0] + 1][point[1] + 1] == 1 or matrix[point[0] + 2][point[1] + 1] == 1:
+        if matrix[y + 1][x + 1] == 1 or matrix[y + 2][x + 1] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0]][point[1] + 1] = 0
-        matrix[point[0] + 1][point[1] - 1] = 0
+        matrix[y][x + 1] = 0
+        matrix[y + 1][x - 1] = 0
         # Putting rotated shape
-        matrix[point[0] + 1][point[1] + 1] = 2
-        matrix[point[0] + 2][point[1] + 1] = 2
+        matrix[y + 1][x + 1] = 2
+        matrix[y + 2][x + 1] = 2
 
         return 0    
     else: raise Exception("Unexpected error")
@@ -179,71 +195,67 @@ def rotate_T(matrix, state, point) -> int:
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
     if state == 0:
+        # Rotate point
+        y, x = point[0] + 1, point[1]
         # Check for field border
-        if point[1] - 1 < 0:
+        if x - 1 < 0:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] - 1] == 1 or matrix[point[0]][point[1] + 1] == 1:
+        if  matrix[y][x - 1] == 1:
             return state
         
         # Removing original shape
-        matrix[point[0] + 2][point[1]] = 0
-        matrix[point[0] + 1][point[1] + 1] = 0
+        matrix[y - 1][x] = 0
         # Putting rotated shape
-        matrix[point[0]][point[1] - 1] = 2
-        matrix[point[0]][point[1] + 1] = 2
+        matrix[y][x - 1] = 2
 
         return 1
     
     elif state == 1:
-        # Check for field border
-        if point[1] - 1 < 0:
-            return state
+        # Rotate point
+        y, x = point[0], point[1] + 1
         # Check for another block collision
-        if matrix[point[0] - 1][point[1]] == 1 or matrix[point[0]][point[1] - 1] == 1 or matrix[point[0] + 1][point[1]] == 1:
+        if matrix[y - 1][x] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0]][point[1] + 1] = 0
-        matrix[point[0]][point[1] + 2] = 0
-        matrix[point[0] + 1][point[1] + 1] = 0
+        matrix[y][x + 1] = 0
         # Putting rotated shape
-        matrix[point[0] - 1][point[1]] = 2
-        matrix[point[0]][point[1] - 1] = 2
-        matrix[point[0] + 1][point[1]] = 2
+        matrix[y - 1][x] = 2
 
         return 2
     
     elif state == 2:
+        # Rotate point
+        y, x = point[0] + 1, point[1]
         # Check for field border
-        if point[1] + 1 > max_cell:
+        if x + 1 > max_cell:
             return state
         # Check for another block collision
-        if matrix[point[0] - 1][point[1]] == 1 or matrix[point[0]][point[1] - 1] == 1 or matrix[point[0]][point[1] + 1] == 1:
+        if matrix[y][x + 1] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0] + 1][point[1]] = 0
-        matrix[point[0] + 2][point[1]] = 0
-        matrix[point[0] + 1][point[1] - 1] = 0
+        matrix[y + 1][x] = 0
         # Putting rotated shape
-        matrix[point[0] - 1][point[1]] = 2
-        matrix[point[0]][point[1] - 1] = 2
-        matrix[point[0]][point[1] + 1] = 2
+        matrix[y][x + 1] = 2
 
         return 3
     
     elif state == 3:
+        # Rotate point
+        y, x = point[0] + 1, point[1]
+        # Check for field border
+        if y + 1 > max_row:
+            return state
         # Check for another block collision
         if matrix[point[0]][point[1] + 1] == 1 or matrix[point[0] - 1][point[1]] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0] + 1][point[1] - 1] = 0
-        matrix[point[0] + 1][point[1] + 1] = 0
+        matrix[y][x - 1] = 0
         # Putting rotated shape
-        matrix[point[0]][point[1] + 1] = 2
-        matrix[point[0] - 1][point[1]] = 2
+        matrix[y + 1][x] = 2
 
         return 0
     
@@ -257,74 +269,82 @@ def rotate_J(matrix, state, point) -> int:
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
     if state == 0:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[1] + 2 > max_cell:
+        if x + 2 > max_cell:
             return state
         # Check for another block collision
-        if matrix[point[0] + 1][point[1] + 1] == 1 or matrix[point[0] + 1][point[1] + 2] == 1:
+        if matrix[y + 1][x + 1] == 1 or matrix[y + 1][x + 2] == 1:
             return state
         
         # Removing original shape
-        matrix[point[0] + 2][point[1]] = 0
-        matrix[point[0] + 2][point[1] - 1] = 0
+        matrix[y + 2][x] = 0
+        matrix[y + 2][x - 1] = 0
         # Putting rotated shape
-        matrix[point[0] + 1][point[1] + 1] = 2
-        matrix[point[0] + 1][point[1] + 2] = 2
+        matrix[y + 1][x + 1] = 2
+        matrix[y + 1][x + 2] = 2
 
         return 1
     
     elif state == 1:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[0] + 2 > max_row:
+        if y + 2 > max_row:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] + 1] == 1 or matrix[point[0] + 2][point[1]] == 1:
+        if matrix[y][x + 1] == 1 or matrix[y + 2][x] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0] + 1][point[1] + 1] = 0
-        matrix[point[0] + 1][point[1] + 2] = 0
+        matrix[y + 1][x + 1] = 0
+        matrix[y + 1][x + 2] = 0
         # Putting rotated shape
-        matrix[point[0]][point[1] + 1] = 2
-        matrix[point[0] + 2][point[1]] = 2
+        matrix[y][x + 1] = 2
+        matrix[y + 2][x] = 2
 
         return 2
     
     elif state == 2:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[1] + 2 > max_cell:
+        if x + 2 > max_cell:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] + 2] or matrix[point[0] + 1][point[1] + 2] == 1:
+        if matrix[y][x + 2] or matrix[y + 1][x + 2] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0] + 1][point[1]] = 0
-        matrix[point[0] + 2][point[1]] = 0
+        matrix[y + 1][x] = 0
+        matrix[y + 2][x] = 0
         # Putting rotated shape
-        matrix[point[0]][point[1] + 2] = 2
-        matrix[point[0] + 1][point[1] + 2] = 2
+        matrix[y][x + 2] = 2
+        matrix[y + 1][x + 2] = 2
 
         return 3
     
     elif state == 3:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[0] + 2 > max_row:
+        if y + 2 > max_row:
             return state
-        elif point[1] - 1 < 0:
+        elif x - 1 < 0:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] + 1] == 1 or matrix[point[0] - 1][point[1]] == 1:
+        if matrix[y + 1][x] == 1 or matrix[y + 2][x] == 1 or matrix[y + 2][x - 1] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0]][point[1] + 1] = 0
-        matrix[point[0]][point[1] + 2] = 0
-        matrix[point[0] + 1][point[1] + 2] = 0
+        matrix[y][x + 1] = 0
+        matrix[y][x + 2] = 0
+        matrix[y + 1][x + 2] = 0
         # Putting rotated shape
-        matrix[point[0] + 1][point[1]] = 2
-        matrix[point[0] + 2][point[1]] = 2
-        matrix[point[0] + 2][point[1] - 1] = 2
+        matrix[y + 1][x] = 2
+        matrix[y + 2][x] = 2
+        matrix[y + 2][x - 1] = 2
 
         return 0
     
@@ -338,74 +358,82 @@ def rotate_L(matrix, state, point) -> int:
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
     if state == 0:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[1] + 2 > max_cell:
+        if x + 2 > max_cell:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] + 1] == 1 or matrix[point[0]][point[1] + 2] == 1:
+        if matrix[y][x + 1] == 1 or matrix[y][x + 2] == 1:
             return state
         
         # Removing original shape
-        matrix[point[0] + 2][point[1]] = 0
-        matrix[point[0] + 2][point[1] + 1] = 0
+        matrix[y + 2][x] = 0
+        matrix[y + 2][x + 1] = 0
         # Putting rotated shape
-        matrix[point[0]][point[1] + 1] = 2
-        matrix[point[0]][point[1] + 2] = 2
+        matrix[y][x + 1] = 2
+        matrix[y][x + 2] = 2
 
         return 1
     
     elif state == 1:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[0] + 2 > max_row:
+        if y + 2 > max_row:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] + 1] == 1 or matrix[point[0] + 2][point[1]] == 1:
+        if matrix[y + 1][x + 1] == 1 or matrix[y + 2][x + 1] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0] + 1][point[1]] = 0
-        matrix[point[0]][point[1] + 2] = 0
+        matrix[y + 1][x] = 0
+        matrix[y][x + 2] = 0
         # Putting rotated shape
-        matrix[point[0] + 1][point[1] + 1] = 2
-        matrix[point[0] + 2][point[1] + 1] = 2
+        matrix[y + 1][x + 1] = 2
+        matrix[y + 2][x + 1] = 2
 
         return 2
     
     elif state == 2:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[1] - 2 < 0:
+        if x - 2 < 0:
             return state
         # Check for another block collision
-        if matrix[point[0] + 1][point[1]] or matrix[point[0] + 1][point[1] - 1] == 1 or matrix[point[0] + 1][point[1] - 2] == 1:
+        if matrix[y + 1][x] or matrix[y + 1][x - 1] == 1 or matrix[y + 1][x - 2] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0]][point[1] + 1] = 0
-        matrix[point[0] + 1][point[1] + 1] = 0
-        matrix[point[0] + 2][point[1] + 1] = 0
+        matrix[y][x + 1] = 0
+        matrix[y + 1][x + 1] = 0
+        matrix[y + 2][x + 1] = 0
         # Putting rotated shape
-        matrix[point[0] + 1][point[1]] = 2
-        matrix[point[0] + 1][point[1] - 1] = 2
-        matrix[point[0] + 1][point[1] - 2] = 2
+        matrix[y + 1][x] = 2
+        matrix[y + 1][x - 1] = 2
+        matrix[y + 1][x - 2] = 2
 
         return 3
     
     elif state == 3:
+        # Rotate point
+        y, x = point[0], point[1]
         # Check for field border
-        if point[0] + 2 > max_row:
+        if y + 2 > max_row:
             return state
-        elif point[1] + 1 > max_cell:
+        elif x + 1 > max_cell:
             return state
         # Check for another block collision
-        if matrix[point[0]][point[1] + 1] == 1 or matrix[point[0] - 1][point[1]] == 1:
+        if matrix[y + 2][x] == 1 or matrix[y + 2][x + 1] == 1:
             return state
             
         # Removing original shape
-        matrix[point[0] + 1][point[1] - 1] = 0
-        matrix[point[0] + 1][point[1] - 2] = 0
+        matrix[y + 1][x - 1] = 0
+        matrix[y + 1][x - 2] = 0
         # Putting rotated shape
-        matrix[point[0] + 2][point[1]] = 2
-        matrix[point[0] + 2][point[1] + 1] = 2
+        matrix[y + 2][x] = 2
+        matrix[y + 2][x + 1] = 2
 
         return 0
     
