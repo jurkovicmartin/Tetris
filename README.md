@@ -1,5 +1,5 @@
 <img src="README_img/tetris.png" alt="Tetris" title="Tetris" width=70%>
-<br><br><br>
+<br><br>
 
 Classis Tetris game done in Python with Pygame. I personally love the Tetris game, so as a project i made one myself. The main functionality was implemented with matrix, which represents the playing field, and operations on this matrix. The solution isn't optimal, especially the shapes rotating logic but It was fun little project.
 
