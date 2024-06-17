@@ -216,3 +216,7 @@ def draw_labels(surface):
     text = font.render("R - Reset", True, (255, 255, 255))
     text_rect = text.get_rect(center=(475, 510))
     surface.blit(text, text_rect)
+    font = pygame.font.Font(None, 25)
+    text = font.render("M - Mute", True, (255, 255, 255))
+    text_rect = text.get_rect(center=(475, 535))
+    surface.blit(text, text_rect)
