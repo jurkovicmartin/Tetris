@@ -8,7 +8,7 @@ Matrix representation:
 2 = cell with active shape
 """
 
-def new_shape(matrix, shape):
+def new_shape(matrix, shape: str):
     """
     Shapes:
     0 = I
@@ -18,6 +18,10 @@ def new_shape(matrix, shape):
     4 = 4
     5 = Z
     6 = T
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     if shape == 0:
         matrix[0][3] = 2
@@ -59,6 +63,11 @@ def new_shape(matrix, shape):
 
 
 def draw_shape(surface, matrix, gridsize: int):
+    """
+    Parameters
+    ----
+    matrix: game field matrix
+    """
     for y, row in enumerate(matrix):
         for x, cell in enumerate(row):
             if cell == 1 or cell == 2:
@@ -66,11 +75,14 @@ def draw_shape(surface, matrix, gridsize: int):
                 pygame.draw.rect(surface, (0, 0, 0), (x * gridsize + 55, y * gridsize + 55, gridsize, gridsize), 1)
 
 
-def move_shape(matrix, direction)-> bool|None:
+def move_shape(matrix, direction: str) -> bool:
     """
     Returns True if new shape has to be created.
-    """
 
+    Parameters
+    ----
+    matrix: game field matrix
+    """
     # Find current shape
     cells = []
     for y, row in enumerate(matrix):
@@ -116,9 +128,15 @@ def move_shape(matrix, direction)-> bool|None:
         raise Exception("Unexpected error")
     
 
-def validate_move(matrix, cells, direction) -> bool:
+def validate_move(matrix, cells, direction: str) -> bool:
     """
-    Returns True of move is ok
+    Returns True of move is ok.
+
+    Parameters
+    ----
+    matrix: game field matrix
+
+    cells: cells of the active shape
     """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
@@ -158,6 +176,11 @@ def validate_move(matrix, cells, direction) -> bool:
 
 
 def check_lines(count: int, matrix) -> int:
+    """
+    Parameters
+    ----
+    matrix: game field matrix
+    """
     for y, row in enumerate(matrix):
         # Detect full layer
         if all(i == 1 for i in row):
@@ -175,16 +198,27 @@ def check_lines(count: int, matrix) -> int:
     return count
         
 
-def check_game_over(matrix):
+def check_game_over(matrix) -> bool:
+    """
+    Returns True if the game is over.
+
+    Parameters
+    ----
+    matrix: game field matrix
+    """
     if matrix[0][4] == 1 or matrix[0][5] == 1:
         return True
     else:
         return False
 
 
-def hold_shape(matrix, current_shape, next_shape, held_shape) -> tuple:
+def hold_shape(matrix, current_shape: str, next_shape: str, held_shape: str) -> tuple:
     """
     Returns new (current_shape, next_shape, held)
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     # Remove the current shape from the board
     for y, row in enumerate(matrix):

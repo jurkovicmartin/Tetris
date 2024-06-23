@@ -199,7 +199,7 @@ def main():
 
         # Game field
         draw_frame(screen, game_window, BLACK, ORANGE, 5)
-        draw_grid(screen, GRID_WIDTH, GRID_HEIGHT, GRID_SIZE, (GAME_X_POSITION + 5, GAME_Y_POSITION + 5), board)
+        draw_grid(screen, GRID_WIDTH, GRID_HEIGHT, GRID_SIZE, (GAME_X_POSITION + 5, GAME_Y_POSITION + 5))
         
         # Automatic dropping
         if not pause and not over:

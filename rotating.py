@@ -1,6 +1,6 @@
 import pygame
 
-def rotate_shape(matrix, shape, state) -> int:
+def rotate_shape(matrix, shape: str, state: int) -> int:
     """
     Returns new rotation state.
 
@@ -12,6 +12,10 @@ def rotate_shape(matrix, shape, state) -> int:
     4 = 4
     5 = Z
     6 = T
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     # Find first block of the shape
     first_point = None
@@ -42,9 +46,13 @@ def rotate_shape(matrix, shape, state) -> int:
         raise Exception("Unexpected error")
         
 
-def rotate_I(matrix, state, point) -> int:
+def rotate_I(matrix, state: int, point) -> int:
     """
     Returns new rotation state.
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
@@ -94,9 +102,13 @@ def rotate_I(matrix, state, point) -> int:
     else: raise Exception("Unexpected error")
 
 
-def rotate_Z(matrix, state, point) -> int:
+def rotate_Z(matrix, state: int , point) -> int:
     """
     Returns new rotation state.
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
@@ -142,9 +154,13 @@ def rotate_Z(matrix, state, point) -> int:
     else: raise Exception("Unexpected error")
 
 
-def rotate_4(matrix, state, point) -> int:
+def rotate_4(matrix, state: int, point) -> int:
     """
     Returns new rotation state.
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
@@ -188,9 +204,13 @@ def rotate_4(matrix, state, point) -> int:
     else: raise Exception("Unexpected error")
 
 
-def rotate_T(matrix, state, point) -> int:
+def rotate_T(matrix, state: int, point) -> int:
     """
     Returns new rotation state.
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
@@ -262,9 +282,13 @@ def rotate_T(matrix, state, point) -> int:
     else: raise Exception("Unexpected error")
 
 
-def rotate_J(matrix, state, point) -> int:
+def rotate_J(matrix, state: int, point) -> int:
     """
     Returns new rotation state.
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1
@@ -351,9 +375,13 @@ def rotate_J(matrix, state, point) -> int:
     else: raise Exception("Unexpected error")
 
 
-def rotate_L(matrix, state, point) -> int:
+def rotate_L(matrix, state: int, point) -> int:
     """
     Returns new rotation state.
+
+    Parameters
+    ----
+    matrix: game field matrix
     """
     max_row = len(matrix) - 1
     max_cell = len(matrix[0]) - 1

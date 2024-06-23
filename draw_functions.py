@@ -7,7 +7,7 @@ def draw_frame(surface, rect, color, border_color, border_width: int):
     pygame.draw.rect(surface, border_color, rect, border_width)
 
 
-def draw_grid(surface, width: int, heigth: int, size: int, position, board):
+def draw_grid(surface, width: int, heigth: int, size: int, position: tuple):
     x_postion, y_postion = position
     for y in range(heigth):
         for x in range(width):
@@ -15,7 +15,7 @@ def draw_grid(surface, width: int, heigth: int, size: int, position, board):
             pygame.draw.rect(surface, (40, 40, 40), (x * size + x_postion, y * size + y_postion, size, size), 1)
 
 
-def draw_next_shape(surface, shape, gridsize):
+def draw_next_shape(surface, shape: str, gridsize: int):
     """
     Shapes:
     0 = I
@@ -78,14 +78,14 @@ def draw_next_shape(surface, shape, gridsize):
         raise Exception("Unexpected error")
     
 
-def show_score(surface, score):
+def show_score(surface, score: int):
     font = pygame.font.Font(None, 30)
     text = font.render(f"Lines: {score}", True, (255, 255, 255))
     text_rect = text.get_rect(center=(400 + 75, 400 + 25))
     surface.blit(text, text_rect)
 
 
-def show_start(surface, screen_size):
+def show_start(surface, screen_size: tuple):
     x_size, y_size = screen_size
     font = pygame.font.Font(None, 45)
     text = font.render("Press SPACE to start", True, (255, 255, 255))
@@ -102,9 +102,7 @@ def show_start(surface, screen_size):
     surface.blit(text, text_rect)
 
 
-
-
-def show_pause(surface, screen_size):
+def show_pause(surface, screen_size: tuple):
     x_size, y_size = screen_size
     font = pygame.font.Font(None, 40)
     text = font.render("PAUSED", True, (255, 255, 255))
@@ -112,7 +110,7 @@ def show_pause(surface, screen_size):
     surface.blit(text, text_rect)
 
 
-def show_game_over(surface, screen_size, score):
+def show_game_over(surface, screen_size: tuple, score: int):
     x_size, y_size = screen_size
     font = pygame.font.Font(None, 40)
     text = font.render("GAME OVER", True, (255, 255, 255))
@@ -126,7 +124,7 @@ def show_game_over(surface, screen_size, score):
     surface.blit(text, text_rect)
 
 
-def draw_hold_shape(surface, shape, gridsize):
+def draw_hold_shape(surface, shape: str, gridsize: int):
     """
     Shapes:
     None = none
